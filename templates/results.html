@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %} Results {% endblock %}
+{% block content %}
+<h1> Results </h1> 
+{{ character.name }}<br>
+{{ character.element }}<br>
+{{ character.stats }}<br>
+{% if character.base_spells %}
+{{ character.base_spells }}
+{% endif %}
+{% endblock %}

@@ -2,4 +2,8 @@
 {% block title %} Welcome to the Golden Sun App! {% endblock %}
 {% block content %}
 <h1> Welcome to the Golden Sun Info App~ </h1>
+<form action="/results" method="POST">
+    Enter character name: <input type="text" name="character" required>
+    <input type="submit">
+    </form>
 {% endblock %}

@@ -1,0 +1,4 @@
+Isaac|Earth|104,114|76,86|77,87|78,88|Move, Retreat
+Garet|Fire|76,86|104,114|78,88|77,87|Move
+Ivan|Wind|77,87|78,88|104,114|76,86|Mind Read, Reveal
+Mia|Water|78,88|77,87|76,86|104,114|None
