@@ -2,7 +2,7 @@
 
 import goldensun as gs
 
-elements = ["earth", "fire", "wind", "water"]
+elements = set(["earth", "fire", "wind", "water"])
 char_dict = gs.create_char_dict("characters.txt")
 djinn_dict = gs.create_djinn_dict("djinn.txt")
 
@@ -28,12 +28,9 @@ while user_input.lower() != 'q':
         if user_char.lower() == "e":
             print("Preferred element: " + char_dict[char].element)
 
-        # TO DO: Fix this to work with classes
         elif user_char.lower() == "s":
-            for e in elements:
-                info = char_dict[char][e].split(",")
-                print("{} Power: {}".format(e.capitalize(), info[0]))
-                print("{} Resist: {}".format(e.capitalize(), info[1]))
+            for stat, val in char_dict[char].stats._asdict().items():
+                print("{} : {}".format(stat.replace("_", " "), val))
 
         user_input = input("Type 'd' if you would like to look up djinn. Type 'c' if you would like to look up characters. Type 'q' to quit. ")
 
@@ -52,9 +49,8 @@ while user_input.lower() != 'q':
                 print("This is not a valid djinn!")
                 user_djinn = input("What djinn do you want to learn about? ")
 
-            # TO DO: Fix this to work with classes
-            for stat, value in djinn_dict[user_djinn].items():
-                print("{} : {}".format(stat, value))
+            for stat, val in djinn_dict[user_djinn].stats._asdict().items():
+                print("{}: {}".format(stat, val))
 
         elif djinn_info == "2":
             user_elem = input("Type Earth, Fire, Wind, or Water.")
@@ -63,7 +59,7 @@ while user_input.lower() != 'q':
                 print("Please enter a valid input.")
                 user_elem = input("Type Earth, Fire, Wind, or Water.")
 
-            print([djinn for djinn in djinn_dict if djinn_dict[djinn].element.lower() == user_elem])
+            print([djinn for djinn in djinn_dict if djinn_dict[djinn].element.lower() == user_elem.lower()])
 
         user_input = input("Type 'd' if you would like to look up djinn. Type 'c' if you would like to look up characters. Type 'q' to quit. ")
 

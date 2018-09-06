@@ -4,10 +4,11 @@ from collections import namedtuple
 
 
 class Djinn:
-    def __init__(self, element, name, hp, pp, attack, defense, agility, luck):
-        Stat = namedtuple("Stat", ["hp", "pp", "attack", "defense", "agility", "luck"])
+    def __init__(self, name, element, stats):
+        Stat = namedtuple("Stat", ["HP", "PP", "Attack", "Defense", "Agility", "Luck"])
         self.element = element
-        self.stats = Stat(hp, pp, attack, defense, agility, luck)
+        self.name = name
+        self.stats = Stat(*stats)
         self.ability = None
 
     def add_ability(self, ability):
@@ -16,10 +17,10 @@ class Djinn:
 
 class GSChar:
     def __init__(self, name, element, stats, spells=None):
-        Stat = namedtuple("Stat", ["e_power", "e_resist", "f_power", "f_resist",
-                          "win_power", "win_resist", "wa_power", "wa_resist"])
+        Stat = namedtuple("Stat", ["Earth_Power", "Earth_Resist", "Fire_Power", "Fire_Resist",
+                          "Wind_Power", "Wind_Resist", "Water_Power", "Water_Resist"])
         self.name = name
-        self.stats = Stat(stats[0], stats[1], stats[2], stats[3], stats[4], stats[5], stats[6], stats[7])
+        self.stats = Stat(*stats)
         self.element = element
         self.base_spells = spells
         self.classes = {}
@@ -75,8 +76,9 @@ def create_djinn_dict(input_file):
 
     for line in open(input_file):
         info = line.strip().replace("--", "0").split()
-        name, hp, pp, att, dfns, agi, lck, typ = info
-        d_dict[name] = Djinn(typ, name, hp, pp, att, dfns, agi, lck)
+        name = info[0]
+        typ = info[-1]
+        d_dict[name] = Djinn(name, typ, info[1:7])
 
     return d_dict
 
@@ -88,11 +90,14 @@ def create_char_dict(input_file):
     for line in open(input_file):
         info = line.strip().split("|")
         char = info[0]
+        element = info[1]
         spells = info[6]
+        stats = info[2].split(",") + info[3].split(",") + info[4].split(",") + info[5].split(",")
+
         if spells == "None":
-            characters[char] = GSChar(char, info[1], (info[2].split(",") + info[3].split(",") + info[4].split(",") + info[5].split(",")))
+            characters[char] = GSChar(char, element, stats)
         else:
-            characters[char] = GSChar(char, info[1], (info[2].split(",") + info[3].split(",") + info[4].split(",") + info[5].split(",")), spells)
+            characters[char] = GSChar(char, element, stats, spells)
 
     return characters
 
